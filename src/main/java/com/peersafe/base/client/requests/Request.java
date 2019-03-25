@@ -1,6 +1,7 @@
 package com.peersafe.base.client.requests;
 
 import java.util.Iterator;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.json.JSONException;
@@ -92,6 +93,9 @@ public class Request extends Publisher<Request.events> {
      * Request.
      */
     public void request() {
+    	if(!client.connected) {
+    		logger.log(Level.WARNING, "request when not connected");
+    	}
         client.nowOrWhenConnected(new Client.OnConnected() {
             @Override
             public void called(final Client client_) {

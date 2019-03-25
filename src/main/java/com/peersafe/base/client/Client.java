@@ -733,6 +733,7 @@ public class Client extends Publisher<Client.events> implements TransportEventHa
         
         //deal with reconnect
         if(reconnecting) {
+        	log(Level.INFO, "reconnect success!");
         	reconnecting = false;
 			emit(OnReconnected.class,null);
 			reconnect_future.cancel(true);

@@ -748,7 +748,7 @@ public class Client extends Publisher<Client.events> implements TransportEventHa
         log(Level.WARNING, "Unhandled message: " + msg);
     }
 
-    void onResponse(JSONObject msg) {
+    synchronized void onResponse(JSONObject msg) {
         Request request = requests.remove(msg.optInt("id", -1));
 
         if (request == null) {
@@ -945,7 +945,7 @@ public class Client extends Publisher<Client.events> implements TransportEventHa
      * @param cmd Command name.
      * @return Request data.
      */
-    public Request newRequest(Command cmd) {
+    public synchronized Request newRequest(Command cmd) {
         return new Request(cmd, cmdIDs++, this);
     }
 
@@ -958,7 +958,10 @@ public class Client extends Publisher<Client.events> implements TransportEventHa
         Logger reqLog = Request.logger;
 
         try {
-            requests.put(request.id, request);
+        	synchronized (requests){
+        		requests.put(request.id, request);
+        	}
+            
             request.bumpSendTime();
             sendMessage(request.toJSON());
             // Better safe than sorry

@@ -9,12 +9,14 @@ public class Sha512 {
     
     public Sha512() {
         try {
-            messageDigest = MessageDigest.getInstance("SHA-512", "BC");
+//            messageDigest = MessageDigest.getInstance("SHA-512", "BC");
+        	messageDigest = MessageDigest.getInstance("SHA-512");
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
-        } catch (NoSuchProviderException e) {
-            throw new RuntimeException(e);
-        }
+        } 
+//        catch (NoSuchProviderException e) {
+//            throw new RuntimeException(e);
+//        }
     }
     public Sha512(byte[] start) {
         this();

@@ -86,7 +86,7 @@ public class Chainsql extends Submit {
 	@SuppressWarnings("resource")
 	public Connection connect(String url) {
 		connection = new Connection().connect(url);
-		doWhenConnect();
+//		doWhenConnect();
 		return connection;
 	}
 	/**
@@ -99,7 +99,7 @@ public class Chainsql extends Submit {
 	@SuppressWarnings("resource")
 	public Connection connect(String url,String serverCertPath,String storePass) {
 		connection = new Connection().connect(url,serverCertPath,storePass);
-		doWhenConnect();
+//		doWhenConnect();
 		return connection;
 	}
 	/**

@@ -27,7 +27,6 @@ import com.peersafe.base.client.enums.Command;
 import com.peersafe.base.client.enums.Message;
 import com.peersafe.base.client.enums.RPCErr;
 import com.peersafe.base.client.pubsub.Publisher;
-import com.peersafe.base.client.pubsub.Publisher.Callback;
 import com.peersafe.base.client.requests.Request;
 import com.peersafe.base.client.requests.Request.Manager;
 import com.peersafe.base.client.responses.Response;
@@ -39,7 +38,6 @@ import com.peersafe.base.client.transactions.AccountTxPager;
 import com.peersafe.base.client.transactions.TransactionManager;
 import com.peersafe.base.client.transport.TransportEventHandler;
 import com.peersafe.base.client.transport.WebSocketTransport;
-import com.peersafe.base.client.types.AccountLine;
 import com.peersafe.base.core.coretypes.AccountID;
 import com.peersafe.base.core.coretypes.Issue;
 import com.peersafe.base.core.coretypes.STObject;
@@ -359,8 +357,9 @@ public class Client extends Publisher<Client.events> implements TransportEventHa
      */
     public void disconnect() {
         manuallyDisconnected = true;
-    	disconnectInner();
+    	    disconnectInner();
         service.shutdownNow();
+        connected = false;
         // our disconnect handler should do the rest
     }
     
@@ -722,10 +721,12 @@ public class Client extends Publisher<Client.events> implements TransportEventHa
     }
     private void doOnDisconnected() {
     	log(Level.INFO, getClass().getName() + ": doOnDisconnected");
-    	if(connected)
-    		connected = false;
-    	else
-    		return;
+//    	if(connected)
+//    		connected = false;
+//    	else
+//    		return;
+    	
+        connected = false;
         emitOnDisconnected();
 
         if (!manuallyDisconnected) {
@@ -749,6 +750,7 @@ public class Client extends Publisher<Client.events> implements TransportEventHa
 			emit(OnReconnected.class,null);
 			reconnect_future.cancel(true);
 			reconnect_future = null;
+			manuallyDisconnected = false;
         }
         
         subscribe(prepareSubscription());

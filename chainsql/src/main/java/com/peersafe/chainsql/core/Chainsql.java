@@ -1112,6 +1112,7 @@ public class Chainsql extends Submit {
 		}
 		obj.put("address", address);
 		obj.put("publicKey", publicKey);
+		obj.put("publicKeyHex", Util.bytesToHex(pubBytes));
 		return obj;
 	}
 	/**

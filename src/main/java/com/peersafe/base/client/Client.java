@@ -204,7 +204,7 @@ public class Client extends Publisher<Client.events> implements TransportEventHa
     public boolean connected = false;
     // If we haven't received any message from the server after x many
     // milliseconds, disconnect and reconnect again.
-    private long reconnectDormantAfter = 20000; // ms
+    private long reconnectDormantAfter = 120000; // ms
     // ms since unix time of the last indication of an alive connection
     private long lastConnection = -1; // -1 means null
     // Did we disconnect manually? If not, try and reconnect

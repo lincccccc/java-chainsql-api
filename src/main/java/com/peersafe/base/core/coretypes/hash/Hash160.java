@@ -53,7 +53,7 @@ public class Hash160 extends Hash<Hash160> {
 
         @Override
         public Hash160 fromString(String value) {
-            if (value.startsWith("r")) {
+            if (value.startsWith("z")) {
                 return newInstance(AccountID.fromAddress(value).bytes());
             }
             return super.fromString(value);
